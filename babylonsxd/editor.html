@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>BabylonSXD - Editeur</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" type="image/x-icon" href="textures/SxdLogo.ico">
+    <link rel="stylesheet" href="index.css">
+  </head>
+
+  <body onload="showLoadingScreen()">
+    
+    <div id="loading">
+      <div id="loading-spinner" class="rotate linear infinite"></div>
+    </div>
+
+    <label for="cars">Choose a car:</label>
+
+    <select name="cars" id="cars">
+        <optgroup label="Points d'intérêt">
+            
+        </optgroup>
+        <optgroup label="Information Générale">
+            
+        </optgroup>
+    </select> 
+
+    <script src="dist/editor.bundle.js"></script>
+  </body>
+
+  <script>
+
+    /**
+    * Affiche l'écran de chargement au lancement de la fenêtre
+    */
+    function showLoadingScreen()
+    {
+        if (document.all)
+        {
+            document.all["loading"].style.visibility="visible";
+        } 
+        else if (document.getElementById)
+        {
+            node = document.getElementById("loading").style.visibility='hidden';
+        }
+    }
+
+  </script>
+
+</html>
