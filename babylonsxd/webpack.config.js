@@ -1,20 +1,7 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlBundlerPlugin = require('html-bundler-webpack-plugin');
 const WebpackBundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const isDevMode = true;
-
-
-const htmlPageNames = ['index', 'editor'];
-const multipleHtmlPlugins = htmlPageNames.map(name => 
-{
-    return new HtmlWebpackPlugin(
-    {
-        template: `./${name}.html`, // relative path to the HTML files
-        filename: `${name}.html`, // output HTML files
-        chunks: [`${name}`] // respective JS files
-    });
-});
-
 
 module.exports = 
 {
@@ -24,6 +11,11 @@ module.exports =
 
   resolve: 
   {
+    alias: {
+      // aliases used in HTML, CSS
+      '@textures': path.join(__dirname, 'src/textures'),
+      '@fonts': path.join(__dirname, 'src/fonts'),
+    },
     extensions: [".ts", ".js", ".json"],
   },
   
@@ -35,25 +27,53 @@ module.exports =
         test: /\.tsx?$/,
         exclude: /node_modules/,
         loader: "ts-loader",
-      }
+      },
+      {
+        test: /\.(s?css)$/,
+        use: ['css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(jpe?g|gif|png|ico)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'img/[name].[hash:8][ext][query]',
+        },
+      },
+      {
+        test: /\.(woff2?|ttf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'font/[name].[hash:8][ext][query]',
+        },
+      },
     ],
   },
 
-  entry: 
-  {
-    index: './src/index.ts',
-    editor: './src/editor.ts',
-  },
+  // entry: 
+  // {
+  //   index: './src/index.ts',
+  //   editor: './src/editor.ts',
+  // },
 
   plugins: 
   [ 
-      //new HtmlWebpackPlugin({ template: './index.html' }),
-      // , new WebpackBundleAnalyzer()
-  ].concat(multipleHtmlPlugins),
+    // , new WebpackBundleAnalyzer()
+    new HtmlBundlerPlugin({
+      entry: {
+        'index': './src/index.html', // => dist/index.html
+        'editor': './src/editor.html', // => dist/editor.html
+      },
+      js: {
+        filename: 'js/[name].[contenthash:8].js', // output JS filename
+      },
+      css: {
+        filename: 'css/[name].[contenthash:8].css', // output CSS filename
+      },
+    }),
+  ],
 
   output: 
   {
-    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
@@ -69,6 +89,17 @@ module.exports =
           name: 'vendors',
           chunks: 'all',
         },
+      },
+    },
+  },
+
+  // enable live reload
+  devServer: {
+    static: path.join(__dirname, 'dist'),
+    watchFiles: {
+      paths: ['src/**/*.*'],
+      options: {
+        usePolling: true,
       },
     },
   },
