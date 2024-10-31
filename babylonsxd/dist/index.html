@@ -3,17 +3,20 @@
   <head>
     <title>BabylonSXD</title>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" type="image/x-icon" href="textures/SxdLogo.ico">
-    <link rel="stylesheet" href="index.css">
-  <script defer src="runtime.bundle.js"></script><script defer src="vendors.bundle.js"></script><script defer src="index.bundle.js"></script></head>
+    <!-- relative path to image source file -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/SxdLogo.edda23bf.ico">
+    <!-- relative path to SCSS/CSS source file -->
+    <link rel="stylesheet" href="css/index.cdfb4cd9.css">
+  </head>
 
   <body onload="showLoadingScreen()">
     <div id="loading">
       <div id="loading-spinner" class="rotate linear infinite"></div>
     </div>
 
-
-    <button id="videoCloseBtn"><img id="quitIcon" src="textures/ui/Quit.png"></button>
+    <!-- relative path to source image file -->
+    <img id="quitIcon" src="img/Quit.1619f15a.png">
+    <button id="videoCloseBtn"><img id="quitIcon" src="img/Quit.1619f15a.png"></button>
     <video id="poiVideoPlayer" width="100%" height="100%" type="video/mp4" preload="none" autoplay="true" controls>Your browser does not support the video tag.</video> 
     <!-- <iframe id="poiVideoPlayer"
       src="https://www.youtube.com/embed/-hO7fM9EHU4?si=XiMZFQr1q4s1_KsD" 
@@ -23,9 +26,10 @@
     </iframe>  -->
     <div id="fps">0</div>
     <canvas id="renderCanvas" touch-action="none"></canvas>
-    <script src="dist/runtime.bundle.js"></script>
-    <script src="dist/vendors.bundle.js"></script>
-    <script src="dist/index.bundle.js"></script>
+    
+    <!-- relative path to JS/TS source file -->
+    <script src="js/runtime.129f990f.js"></script>
+<script src="js/index.d9b1360e.js"></script>
   </body>
 
   <script>
@@ -41,10 +45,9 @@
           } 
           else if (document.getElementById)
           {
-              node = document.getElementById("loading").style.visibility='hidden';
+              //node = document.getElementById("loading").style.visibility='hidden';
           }
     }
-    
   </script>
 
 </html>
